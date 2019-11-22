@@ -89,7 +89,6 @@ also makes an effort to incorporate lessons learned from 15 years of GCL usage.
 This also includes lessons learned from offsprings and different approaches to
 configuration altogether.
 
-
 ## Philosophy and principles
 
 ### Types are Values
@@ -153,16 +152,17 @@ remains.
 
 CUE's constraints act as data validators, but also double as
 a mechanism to reduce boilerplate.
-This is a powerful approach, but requires some thinking different.
-With traditional inheritance approaches one specifies the templates that
+This is a powerful approach, but requires some different thinking.
+With traditional inheritance approaches, one specifies the templates that
 are to be inherited from at each point they should be used.
-In CUE, instead, one selects a set of nodes in the configuration to which
+In CUE, one instead selects a set of nodes in the configuration to which
 to apply a template.
 This selection can be at a different point in the configuration altogether.
 
 Another way to view this, a JSON configuration, say, can be
 defined as a sequence of path-leaf values.
 For instance,
+
 ```json
 {
   "a": 3,
@@ -173,27 +173,31 @@ For instance,
 ```
 
 could be represented as
+
 ```
 "a": 3
-"b" "c": "foo
+"b" "c": "foo"
 ```
+
 All the information of the original JSON file is retained in this
 representation.
 
 CUE generalizes this notion to the following pattern:
+
 ```
 <set of nodes>: <constraints>
 ```
+
 Each field declaration in CUE defines a set of nodes to which to apply
 a specific constraint.
 Because order doesn't matter, multiple constraints can be applied to the
-same nodes, all of which need to apply simultaneously.
+same nodes, all of which will be applied simultaneously.
 Such constraints may even be in different files.
 But they may never contradict each other:
 if one declaration says a field is `5`, another may not override it to be `6`.
 Declaring a field to be both `>5` and `<10` is valid, though.
 
-This approach is more restricted than full-blown inheritance;
+Because this approach is more restricted than full-blown inheritance,
 it may not be possible to reuse existing configurations.
 On the other hand, it is also a more powerful boilerplate remover.
 For instance, suppose each job in a set needs to use a specific
@@ -227,7 +231,7 @@ Such requirements can be specified across files.
 This approach not only reduces the boilerplate contained in `acmeMonitoring`
 but also removes the repetitiveness of having to specify
 this template for each job in `jobs`.
-At the same time, this statement act as a type enforcement.
+At the same time, this statement acts as a type enforcement.
 This dual function is a key aspect of CUE and
 typed feature structure languages in general.
 
@@ -261,10 +265,10 @@ added is irrelevant.
 
 The usefulness of a language may depend on the scale of the project.
 Having too many different languages can put a cognitive strain on
-developers, though, and migrating from one language to another as
+developers, and migrating from one language to another as
 scaling requirements change can be very costly.
 CUE aims to minimize these costs
-by covering a myriad of data- and configuration-related tasks at all scales.
+by covering a myriad of data and configuration-related tasks at all scales.
 
 **Small scale**
 At small scales, reducing boilerplate in configurations is not necessarily
@@ -287,7 +291,7 @@ Its import model incorporates best practices for large-scale engineering
 and it is optimized for automation.
 A key to this is advanced tooling.
 The mathematical model underlying CUE's operations allows for
-automation that is untractable for most other approaches.
+automation that is intractable for most other approaches.
 CUE's `trim` command is an example of this.
 
 
@@ -300,12 +304,12 @@ The CUE language, APIs, and tooling have been designed to allow for
 machine manipulation.
 Aspects of this are:
 
-- make the language easy to scan and parse,
-- restrictions on imports,
+- make the language easy to scan and parse
+- place restrictions on imports
 - allow any piece of data to be split across files and generated
-  from different sources,
-- define packages at the directory level,
-- and of course its value and type model.
+  from different sources
+- define packages at the directory level
+- and of course its value and type model
 
 The order independence also plays a key role in this.
 It allows combining constraints from various sources without having
